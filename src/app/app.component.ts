@@ -18,16 +18,16 @@ const TOPK = 10;
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'angular-electron';
 
-  infoTexts;
-  training;
-  videoPlaying;
-  video;
-  knn;
+  // Initiate variables
+  infoTexts: any[];
+  training: number;
+  videoPlaying: boolean;
+  video: HTMLVideoElement;
+  knn; // KNNClassifier
+  mobilenet; // MobileNetModule
+  robot; // from robotjs
   timer;
-  mobilenet;
-  robot;
 
   constructor(private electronService: ElectronService) {
 
@@ -58,7 +58,7 @@ export class AppComponent {
 
       // Create training button
       const button = document.createElement('button');
-      button.innerText = 'Train ' + i;
+      button.innerText = 'Train Class ' + (i + 1);
       div.appendChild(button);
 
       // Listen for mouse events when clicking the button
@@ -83,24 +83,6 @@ export class AppComponent {
         this.video.addEventListener('playing', () => this.videoPlaying = true);
         this.video.addEventListener('paused', () => this.videoPlaying = false);
       });
-
-  }
-
-  public beep() {
-    this.electronService.shell.beep();
-
-    // Speed up the mouse.
-    this.robot.setMouseDelay(2);
-
-    const twoPI = Math.PI * 2.0;
-    const screenSize = this.robot.getScreenSize();
-    const height = (screenSize.height / 2) - 10;
-    const width = screenSize.width;
-
-    for (let x = 0; x < width; x++) {
-      const y = height * Math.sin((twoPI * x) / width) + height;
-      this.robot.moveMouseSmooth(x, y);
-    }
 
   }
 
@@ -160,7 +142,7 @@ export class AppComponent {
             if (res.confidences[i] === 1) {
               switch (i) {
                 case 0:
-                  // this.robot.moveMouse(mousePosition.x - 5, mousePosition.y);
+                  // this.robot.moveMouse(mousePosition.x + 5, mousePosition.y);
                   break;
                 case 1:
                   this.robot.moveMouse(mousePosition.x + 5, mousePosition.y);

@@ -14,7 +14,7 @@ function createWindow() {
     win = new electron_1.BrowserWindow({ width: 800, height: 600 });
     // win = new BrowserWindow({ fullscreen: true });
     win.loadURL(url.format({
-        pathname: path.join(__dirname, "/../../dist/angular-electron/index.html"),
+        pathname: path.join(__dirname, "/../../dist/teachable-desktop-automation/index.html"),
         protocol: 'file:',
         slashes: true,
     }));
